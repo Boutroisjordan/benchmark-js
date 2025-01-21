@@ -8,6 +8,7 @@ import { Express } from "express";
 import { startConsumers } from "@/src/amqp/consumerManager.js";
 import { connectRabbitMQ } from "@/src/amqp/connection.js";
 import '@/src/utils/datadog.js';
+import prisma from "@/src/utils/prisma.js";
 
 // Récupérer le chemin projet root (__dirname en ES module ça marche pas)
 const __filename = import.meta.dirname
@@ -48,7 +49,7 @@ const keyPath = path.join(certsDir, 'private.key');
 
 //Fermer Prisma quand l'application s'arrète
 process.on('exit', function (code) {
-  DisconnectPrismaClient()
+  DisconnectPrismaClient(prisma)
   return console.log(`Process to exit with code ${code}`);
 })
 

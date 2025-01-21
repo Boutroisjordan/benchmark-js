@@ -2,7 +2,7 @@ import app from "@/src/app";
 import type { Express } from "express";
 import path from "path";
 import fs from "fs";
-import { DisconnectPrismaClient } from "./src/utils/prisma";
+import prisma, { DisconnectPrismaClient } from "./src/utils/prisma";
 import swaggerDocs from "./src/utils/swagger";
 import https from "https";
 import { connectRabbitMQ } from "./src/amqp/connection";
@@ -53,7 +53,7 @@ console.log(certPath);
 
 //Fermer Prisma quand l'application s'arrète
 process.on('exit', function (code) {
-  DisconnectPrismaClient()
+  DisconnectPrismaClient(prisma)
   return console.log(`Process to exit with code ${code}`);
 })
 

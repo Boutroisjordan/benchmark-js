@@ -4,6 +4,8 @@ import { csrf } from 'hono/csrf'
 import franchises from './controllers/franchises.controller';
 import { readFileSync } from "fs"
 import * as path from "path"
+import { prisma } from './utils/prisma';
+import { DisconnectPrismaClient } from './utils/prisma';
 
 const app = new Hono();
 
@@ -55,3 +57,9 @@ if (process.env.ENV === "dev") {
   });
   console.info("Server starting: https://localhost:443");
 }
+
+//Fermer Prisma quand l'application s'arrète
+process.on('exit', function (code) {
+  DisconnectPrismaClient(prisma)
+  return console.log(`Process to exit with code ${code}`);
+})
