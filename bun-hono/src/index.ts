@@ -28,10 +28,6 @@ app.get('/', (c) => {
   return c.text('Hello Hono!')
 })
 
-app.post('/caca', (c) => {
-  return c.text('Hello Hono hey oh!')
-})
-
 
 const certsDir = process.env.ENV === "dev"
   ? path.resolve(__dirname, '../certs') // production, accès à la racine du projet
@@ -54,7 +50,7 @@ if (process.env.ENV === "dev") {
 } else {
   Bun.serve({
     fetch: app.fetch,
-    port: process.env.PORT || 3003, // Port HTTPS par défaut
+    port: process.env.PORT || 3002, // Port HTTPS par défaut
     development: true,
   });
   console.info("Server starting: https://localhost:443");

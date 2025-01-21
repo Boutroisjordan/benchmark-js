@@ -13,7 +13,7 @@ import '@/src/utils/datadog.js';
 const __filename = import.meta.dirname
 const __dirname = path.dirname(__filename);
 
-const PORT: number = parseInt(process.env.PORT) ?? 3000;
+const PORT: number = parseInt(process.env.PORT) ?? 3003;
 const ENV: string = process.env.ENV ?? "prod";
 // Chemin des certificats 
 // const certPath = './certs/server.crt';

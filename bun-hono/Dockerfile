@@ -37,9 +37,10 @@ COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 # COPY docker-entrypoint.shè§ .
 
-RUN mkdir -p logs certs
+RUN chmod +x docker-entrypoint.sh && \
+    mkdir -p logs certs
 
-EXPOSE 443
+EXPOSE 3002
 
-# ENTRYPOINT ["./docker-entrypoint.sh"]
+ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["bun", "run", "./dist/index.js"]

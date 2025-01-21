@@ -14,7 +14,7 @@ const __dirname = import.meta.dirname
 // const __dirname = path.dirname(__filename);
 
 //Check si port est set sinon go sur 3000
-const PORT: number = process.env.PORT ? parseInt(process.env.PORT, 10) || 3000 : 3000;
+const PORT: number = process.env.PORT ? parseInt(process.env.PORT, 10) || 3001 : 3001;
 const ENV: string = process.env.ENV ?? "dev";
 
 // Chemin des certificats 

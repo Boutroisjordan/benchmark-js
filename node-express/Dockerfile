@@ -55,7 +55,7 @@ RUN mkdir -p /usr/src/app/logs && \
 
 USER nodejs
 
-EXPOSE 3002
+EXPOSE 3003
 
 # ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["node", "--no-deprecation", "./dist/src/server.js"]
