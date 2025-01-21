@@ -7,10 +7,11 @@ import swaggerDocs from "./src/utils/swagger";
 import https from "https";
 import { connectRabbitMQ } from "./src/amqp/connection";
 import { startConsumers } from "./src/amqp/consumerManager";
+import { Seeding } from "./src/utils/seed"
 
 
 // Récupérer le chemin projet root (__dirname en ES module ça marche pas)
-const __dirname = import.meta.dirname
+// const __dirname = import.meta.dirname
 // const __dirname = path.dirname(__filename);
 
 //Check si port est set sinon go sur 3000
@@ -19,29 +20,29 @@ const ENV: string = process.env.ENV ?? "dev";
 
 // Chemin des certificats 
 
-const certsDir = ENV === "dev"
-  ? path.resolve(__dirname, '../certs') // production, accès à la racine du projet
-  : path.resolve(__dirname, './certs');
+// const certsDir = ENV === "dev"
+//   ? path.resolve(__dirname, '../certs') // production, accès à la racine du projet
+//   : path.resolve(__dirname, './certs');
 
 
-const certPath = path.join(certsDir, 'server.crt');
-const keyPath = path.join(certsDir, 'private.key');
+// const certPath = path.join(certsDir, 'server.crt');
+// const keyPath = path.join(certsDir, 'private.key');
 
-
-console.log(certPath);
 
 (async () => {
   try {
 
+    await Seeding(() => DisconnectPrismaClient(prisma));
+
     //Lance Connection et consummer RabbitMQ
+    // if (ENV === "production") {
+    //   await connectRabbitMQ();
+    //   await startConsumers();
+    // }
+
+    // startHttpsServer(ENV, certPath, keyPath, PORT, app)
+
     if (ENV === "production") {
-      await connectRabbitMQ();
-      await startConsumers();
-    }
-
-    startHttpsServer(ENV, certPath, keyPath, PORT, app)
-
-    if (ENV === "dev") {
       startHttpServer(app, PORT)
     }
 

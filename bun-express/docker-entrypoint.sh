@@ -2,10 +2,10 @@
 set -e
 
 echo "Running database migrations..."
-npx prisma migrate deploy
+bunx prisma migrate deploy
 
-echo "Seed database"
-npm run seed
+# echo "Generating client"
+# bunx prisma generate
 
 echo "Starting application..."
 exec "$@"

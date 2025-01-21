@@ -8,7 +8,7 @@ services:
       DD_TRACE_AGENT_PORT: 8126
       DD_LOGS_INJECTION: true
     ports:
-      - 3000:3000
+      - 3001:3001
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
