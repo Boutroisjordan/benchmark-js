@@ -57,5 +57,5 @@ USER nodejs
 
 EXPOSE 3003
 
-# ENTRYPOINT ["./docker-entrypoint.sh"]
+ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["node", "--no-deprecation", "./dist/src/server.js"]

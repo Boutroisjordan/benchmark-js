@@ -1,4 +1,5 @@
-import app from "@/src/app"
+import app from "./app.js"
+// import app from "@/src/app"
 import fs from "fs"
 import https from 'https';
 import swaggerDocs from "@/src/utils/swagger.js"
@@ -9,6 +10,7 @@ import { startConsumers } from "@/src/amqp/consumerManager.js";
 import { connectRabbitMQ } from "@/src/amqp/connection.js";
 import '@/src/utils/datadog.js';
 import prisma from "@/src/utils/prisma.js";
+import { Seeding } from "@/src/utils/seed.js";
 
 // Récupérer le chemin projet root (__dirname en ES module ça marche pas)
 const __filename = import.meta.dirname
@@ -34,6 +36,7 @@ const keyPath = path.join(certsDir, 'private.key');
     //   await connectRabbitMQ();
     //   await startConsumers();
     // }
+    await Seeding(() => DisconnectPrismaClient(prisma));
 
     // startHttpsServer(ENV, certPath, keyPath, PORT, app)
 

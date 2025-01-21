@@ -1,14 +1,14 @@
 import { PrismaClient } from "@prisma/client";
-import { DisconnectPrismaClient } from "@/src/utils/prisma";
-import { CreateFranchiseDTO } from "@/src/dto/franchises/create-franchise.dto";
+import { DisconnectPrismaClient } from "@/src/utils/prisma.js";
+import { CreateFranchiseDTO } from "@/src/dto/franchises/create-franchise.dto.js";
 
 const prisma = new PrismaClient();
 
-
-async function main(callback: () => void) {
+export async function Seeding(callback: () => void) {
     await SeedFranchise()
     callback();
 }
+
 
 
 const SeedFranchise = async () => {
@@ -21,7 +21,7 @@ const SeedFranchise = async () => {
         "country": "USA",
         "siret": "12345678901234"
     }
-    let findExisting = await prisma.franchises.findFirstOrThrow({
+    let findExisting = await prisma.franchises.findFirst({
         where: {
             country: "USA",
         }
@@ -30,6 +30,3 @@ const SeedFranchise = async () => {
     const createdFranchise = await prisma.franchises.create({ data: franchise })
     console.log("Franchise Seeding Success")
 }
-
-
-main(() => DisconnectPrismaClient(prisma)).then(r => console.log("Seed Success")).catch(e => console.log(e))
