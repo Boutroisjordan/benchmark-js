@@ -1,0 +1,13 @@
+.env
+# deps
+node_modules/
+# Keep environment variables out of version control
+.env
+
+#Virer les logs
+/logs/
+logs/
+
+#Virer certs server
+certs/
+certs/*.pem

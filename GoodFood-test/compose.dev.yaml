@@ -1,0 +1,49 @@
+
+services:
+  server:
+    build:
+      context: .
+    environment:
+      NODE_ENV: dev
+    ports:
+      - 3000:3000
+      - 3001:3001
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - app-network
+    env_file:
+      - .env
+    depends_on:      # Ajout de la dépendance
+      rabbitmq:
+        condition: service_healthy
+    volumes:
+      - ./certs:/usr/src/app/certs
+      - ./logs:/usr/src/app/logs
+  
+  rabbitmq:
+    image: rabbitmq:4.0-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"    # Port standard AMQP
+      - "15672:15672"  # Port pour l'interface de gestion web
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest     # Utilisateur par défaut
+      - RABBITMQ_DEFAULT_PASS=guest     # Mot de passe par défaut
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq # Persistance des données
+    networks:
+      - app-network
+    healthcheck:     # Ajout d'un healthcheck pour RabbitMQ
+      test: ["CMD", "rabbitmq-diagnostics", "check_port_connectivity"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  rabbitmq_data:

@@ -1,0 +1,35 @@
+
+services:
+  server:
+    build:
+      context: .
+    ports:
+      - 80:80
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    labels:
+      - "com.datadoghq.ad.check_names=nodejs"
+      - "com.datadoghq.ad.init_config=[]"
+      - "com.datadoghq.ad.instances=[{\"host\": \"%%host%%\", \"port\": 80}]"
+    networks:
+      - app-network
+    env_file:
+      - .env
+    environment:
+      DD_AGENT_HOST: datadog-agent
+      DD_TRACE_AGENT_PORT: 8126
+      DD_LOGS_INJECTION: true
+      NODE_ENV: production
+    # depends_on:      # Ajout de la dépendance
+    #   rabbitmq:
+    #     condition: service_healthy
+    volumes:
+      - ./certs:/usr/src/app/certs
+      - ./logs:/usr/src/app/logs
+  
+
+  
+networks:
+  app-network:
+    driver: bridge
+
