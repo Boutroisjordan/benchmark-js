@@ -54,7 +54,7 @@ if (process.env.ENV === "dev") {
 } else {
   Bun.serve({
     fetch: app.fetch,
-    port: process.env.PORT || 3000, // Port HTTPS par défaut
+    port: process.env.PORT || 3003, // Port HTTPS par défaut
     development: true,
   });
   console.info("Server starting: https://localhost:443");

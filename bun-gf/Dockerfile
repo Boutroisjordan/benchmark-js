@@ -39,7 +39,7 @@ COPY docker-entrypoint.sh .
 RUN chmod +x docker-entrypoint.sh && \
     mkdir -p logs certs
 
-EXPOSE 3000
+EXPOSE 3001
 
 # ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["bun", "run", "./dist/index.js"]

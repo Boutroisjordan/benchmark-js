@@ -29,15 +29,15 @@ const keyPath = path.join(certsDir, 'private.key');
   try {
 
     //Lance Connection et consummer RabbitMQ
-    if(ENV != "dev") {
-      await connectRabbitMQ();
-      await startConsumers();
-    }
+    // if(ENV != "productioj") {
+    //   await connectRabbitMQ();
+    //   await startConsumers();
+    // }
 
-    startHttpsServer(ENV, certPath, keyPath, PORT, app)
+    // startHttpsServer(ENV, certPath, keyPath, PORT, app)
 
-    if(ENV === "dev") {
-      startHttpServer(app, PORT+1)
+    if (ENV === "production") {
+      startHttpServer(app, PORT)
     }
 
   } catch (error) {
